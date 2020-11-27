@@ -4,7 +4,7 @@
 
 using namespace CoulombGalore;
 
-typedef Eigen::Vector3d Point; //!< typedef for 3d vector
+typedef arma::vec3 Point; //!< typedef for 3d vector
 
 int main() {
     double pi = 3.141592653589793, // Pi
@@ -23,18 +23,18 @@ int main() {
 
     // this is just the plain old Coulomb potential
     Plain pot_plain;
-    double u12 = pot_plain.ion_ion_energy(z1, z2, r.norm());
+    double u12 = pot_plain.ion_ion_energy(z1, z2, norm(r));
     std::cout << "plain ion-ion energy:      " << bjerrum_length * u12 << " kT" << std::endl;
 
     // this is just the plain old Coulomb potential
     double debye_length = 23.01e-10;
     Plain pot_plainY(debye_length);
-    u12 = pot_plainY.ion_ion_energy(z1, z2, r.norm());
+    u12 = pot_plainY.ion_ion_energy(z1, z2, norm(r));
     std::cout << "plain ion-ion energy:      " << bjerrum_length * u12 << " kT" << std::endl;
 
     // this is a truncated potential
     qPotential pot_qpot(cutoff, 3);
-    u12 = pot_qpot.ion_ion_energy(z1, z2, r.norm());
+    u12 = pot_qpot.ion_ion_energy(z1, z2, norm(r));
     std::cout << "qPotential ion-ion energy: " << bjerrum_length * u12 << " kT" << std::endl;
 
     qPotential pot_qpot3(cutoff, 3);
